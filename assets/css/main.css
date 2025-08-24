@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 亮色模式变量 */
+  --bg-primary: #f9fafb;
+  --bg-secondary: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border-color: #e5e7eb;
+  --shadow-sm: rgba(0, 0, 0, 0.05);
+  --shadow-md: rgba(0, 0, 0, 0.1);
+  --shadow-lg: rgba(0, 0, 0, 0.15);
+  --button-bg: #f3f4f6;
+  --button-bg-hover: #e5e7eb;
+  --primary-color: #3b82f6;
+  --primary-color-hover: #2563eb;
+  --toggle-bg: #ffffff;
+  --toggle-border: #e5e7eb;
+  --toggle-icon: #6b7280;
+}
+
+.dark {
+  /* 暗色模式变量 */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #64748b;
+  --border-color: #334155;
+  --shadow-sm: rgba(0, 0, 0, 0.3);
+  --shadow-md: rgba(0, 0, 0, 0.5);
+  --shadow-lg: rgba(0, 0, 0, 0.7);
+  --button-bg: #334155;
+  --button-bg-hover: #475569;
+  --primary-color: #60a5fa;
+  --primary-color-hover: #3b82f6;
+  --toggle-bg: #1e293b;
+  --toggle-border: #334155;
+  --toggle-icon: #f1f5f9;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#__nuxt {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
