@@ -1,23 +1,23 @@
 <template>
-  <div class="ad-container">
+  <div class="content-container">
     <ClientOnly>
-      <div class="ad-card" v-if="currentAd">
+      <div class="content-card" v-if="currentContent">
         <div class="image-wrapper">
           <img 
-            :src="currentAd.imageUrl" 
-            :alt="currentAd.title"
+            :src="currentContent.imageUrl" 
+            :alt="currentContent.title"
             @error="handleImageError"
           >
         </div>
         
-        <div class="content">
-          <h2 class="title">{{ currentAd.title }}</h2>
-          <p class="description">{{ currentAd.description }}</p>
+        <div class="info">
+          <h2 class="title">{{ currentContent.title }}</h2>
+          <p class="description">{{ currentContent.description }}</p>
           
           <div class="footer">
-            <span class="organization">{{ currentAd.organization }}</span>
+            <span class="organization">{{ currentContent.organization }}</span>
             <a 
-              :href="currentAd.link" 
+              :href="currentContent.link" 
               target="_blank" 
               rel="noopener noreferrer"
               class="cta-button"
@@ -29,9 +29,9 @@
       </div>
       
       <template #fallback>
-        <div class="ad-card skeleton">
+        <div class="content-card skeleton">
           <div class="skeleton-image"></div>
-          <div class="content">
+          <div class="info">
             <div class="skeleton-title"></div>
             <div class="skeleton-text"></div>
             <div class="skeleton-text"></div>
@@ -40,7 +40,7 @@
       </template>
     </ClientOnly>
     
-    <button @click="refreshAd" class="refresh-button" :disabled="!currentAd">
+    <button @click="refreshContent" class="refresh-button" :disabled="!currentContent">
       换一个公益广告
     </button>
   </div>
@@ -48,73 +48,72 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { PublicServiceAd } from '~/composables/useAds'
+import type { PublicServiceContent } from '~/composables/useContent'
 
-const { getRandomAd } = useAds()
-const currentAd = ref<PublicServiceAd | null>(null)
+const { getRandomContent } = useContent()
+const currentContent = ref<PublicServiceContent | null>(null)
 
-const refreshAd = () => {
-  currentAd.value = getRandomAd()
+const refreshContent = () => {
+  currentContent.value = getRandomContent()
 }
 
 const handleImageError = (event: Event) => {
   const img = event.target as HTMLImageElement
-  img.src = '/ads/placeholder.jpg'
+  img.src = '/posters/placeholder.jpg'
 }
 
-// 只在客户端执行
 onMounted(() => {
-  currentAd.value = getRandomAd()
+  currentContent.value = getRandomContent()
 })
 </script>
 
 <style scoped>
-.ad-container {
+.content-container {
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-.ad-card {
+.content-card {
   background: var(--bg-secondary);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px var(--shadow-md);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.ad-card:hover {
+.content-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 12px var(--shadow-lg);
 }
 
-/* 骨架屏样式 */
 .skeleton {
   pointer-events: none;
-}
-
-.skeleton-image,
-.skeleton-title,
-.skeleton-text {
-  background: linear-gradient(90deg, var(--button-bg) 25%, var(--button-bg-hover) 50%, var(--button-bg) 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
 }
 
 .skeleton-image {
   width: 100%;
   height: 300px;
+  background: linear-gradient(90deg, var(--button-bg) 25%, var(--button-bg-hover) 50%, var(--button-bg) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
 }
 
 .skeleton-title {
   height: 24px;
+  background: linear-gradient(90deg, var(--button-bg) 25%, var(--button-bg-hover) 50%, var(--button-bg) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
   margin-bottom: 12px;
   border-radius: 4px;
 }
 
 .skeleton-text {
   height: 16px;
+  background: linear-gradient(90deg, var(--button-bg) 25%, var(--button-bg-hover) 50%, var(--button-bg) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
   margin-bottom: 8px;
   border-radius: 4px;
 }
@@ -144,7 +143,7 @@ onMounted(() => {
   object-fit: cover;
 }
 
-.content {
+.info {
   padding: 24px;
 }
 
@@ -153,6 +152,7 @@ onMounted(() => {
   font-weight: bold;
   color: var(--text-primary);
   margin-bottom: 12px;
+  transition: color 0.3s ease;
 }
 
 .description {
@@ -160,6 +160,7 @@ onMounted(() => {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 20px;
+  transition: color 0.3s ease;
 }
 
 .footer {
@@ -171,11 +172,12 @@ onMounted(() => {
 .organization {
   font-size: 14px;
   color: var(--text-tertiary);
+  transition: color 0.3s ease;
 }
 
 .cta-button {
   background: var(--primary-color);
-  color: white; /* 在两种模式下，白色文本在主色按钮上都有较好的可读性 */
+  color: white;
   padding: 10px 20px;
   border-radius: 6px;
   text-decoration: none;
@@ -197,7 +199,7 @@ onMounted(() => {
   font-size: 16px;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .refresh-button:hover:not(:disabled) {
@@ -210,7 +212,7 @@ onMounted(() => {
 }
 
 @media (max-width: 640px) {
-  .ad-container {
+  .content-container {
     padding: 0 10px;
   }
   
@@ -227,7 +229,7 @@ onMounted(() => {
     font-size: 14px;
   }
   
-  .content {
+  .info {
     padding: 16px;
   }
   
